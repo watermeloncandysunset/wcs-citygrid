@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> CityGrid </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="fullContainer">
+        <div id="about" class="menuContainer popUp tileRegularInactive hide">
+            <div class="menuCol">
+                <p class="menuHeading">About</p>
+                <p class="menuText"> Citygrid is a solitaire-type game that was originally published in the The Board Game Remix Kit <a href="https://bgrk.itch.io/the-board-game-remix-kit">⧉</a>, using Monopoly deeds as cards.</p>
+                <p class="menuText"> Since the closing of the original publisher, the BGRK has been released for free under the CC-BY SA License <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">⧉</a>.</p>
+                <p class="menuText sLHMarginEdge"> This browser version was coded by Watermelon Candy Sunset to make this specific game easier to play digitally, but also mostly for fun.</p>
+                <p class="menuText"> As with the original, this version also uses the CC-BY SA License.</p>
+                <!-- <p class="menuText"> The repository for this version can be found at this link </p> -->
+                <span class="menuButton sLHMarginEdge" onclick="document.getElementById('about').classList.add('hide');">Back</span>
+            </div>
+        </div>
+        <div id="howToPlay" class="menuContainer popUp tileRegularInactive hide">
+            <div class="menuCol">
+                <p class="menuHeading">How to Play</p>
+                <p class="menuText">Each turn, you place the card on the top of the deck onto the grid.</p>
+                <p class="menuText">You can only place cards in a cell that is adjacent to an already-filled cell.</p>
+
+                <p class="menuText">Houses (<img src="imgs/card_house.png" class="menuIcon">) must be adjacent to another House of the same color.</p>
+                <p class="menuText">Power Stations (<img src="imgs/card_power.png" class="menuIcon">) must be a placed in a cell with the power icon.</p>
+                <p class="menuText">Train Stations (<img src="imgs/card_rail.png" class="menuIcon">) must be either in the same row or column as another Train Station, but not adjacent to a Train Station.</p>
+
+                <p class="menuText">These conditions are checked at the end of the game, so don't worry if a neighborhood is temporarily disconnected.</p>
+                <p class="menuText">As long as they are connected at the end, when all the cells are filled, all is good.</p>
+
+                <!-- <p class="menuText"> The repository for this version can be found at this link </p> -->
+                <span class="menuButton sLHMarginEdge" onclick="document.getElementById('howToPlay').classList.add('hide');">Back</span>
+            </div>
+        </div>
+        <div id="menu" class="menuContainer tileRegularInactive">
+            <img src="imgs/logo_subtitled.png" class="logo"/>
+            <div class="menuRow">
+                <div class="menuCol">
+                    <p class="menuHeading">Designed by</p>
+                    <p class="menuText">Kevan Davis</p>
+                    <p class="menuText">Alex Fleetwood</p>
+                    <p class="menuText">Holly Gramazio</p>
+                    <p class="menuText">James Wallis</p>
+                    <p class="menuHeading">and originally published in</p>
+                    <p class="menuText">The Board Game Remix Kit <a href="https://bgrk.itch.io/the-board-game-remix-kit">⧉</a></p>
+                    <p class="menuHeading">by publisher</p>
+                    <p class="menuText">Hide&Seek</p>
+                </div>
+                <div class="menuCol">
+                    <p class="menuHeading">Programmed by</p>
+                    <p class="menuText">Watermelon Candy Sunset</p>
+
+                    <span class="menuButton sLHMarginEdge" onclick="cggame.startGame()">New Game</span>
+                    <span class="menuButton sLHMarginEdge" onclick="document.getElementById('howToPlay').classList.remove('hide');">How to Play</span>
+                    <span class="menuButton" onclick="document.getElementById('about').classList.remove('hide');">About</span>
+                </div>
+                <div class="menuCol">
+                    <p class="menuHeading">Distributed under</p>
+                    <p class="menuText">CC-BY SA License <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">⧉</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="gameContainer">
+            <div class="panel">
+                <div class="panelContainer">
+                    <div id="cardP" class="hide">
+                        <p>Next Card:</p>
+                        <div id="tileP" class="tile noMargin">
+                            <img id="imgP" class="tileImg" src="">
+                            <p id="suitP" class="suit"></p>
+                        </div>
+                    </div>
+                    <div id="results" class="scoreContainer hide">
+                        <p id="endMessage"></p>
+                        <p id="endScoreColor"><span id="endScore"></span> / 25</p>
+                    </div>
+                </div>
+                <div class="panelContainer">
+                    <p>Remaining Cards:</p>
+                    <div class="countContainerRow">
+                        <div id="countCon0" class="countContainer">
+                            <p id="countSuit0" class="countFontSize"></p>
+                            <span id="countNum0" class="countNum countFontSize"></span>
+                        </div>
+                        <div id="countCon1" class="countContainer">
+                            <p id="countSuit1" class="countFontSize"></p>
+                            <span id="countNum1" class="countNum countFontSize"></span>
+                        </div>
+                    </div>
+                    <div class="countContainerRow">
+                        <div id="countCon2" class="countContainer">
+                            <p id="countSuit2" class="countFontSize"></p>
+                            <span id="countNum2" class="countNum countFontSize"></span>
+                        </div>
+                        <div id="countCon3" class="countContainer">
+                            <p id="countSuit3" class="countFontSize"></p>
+                            <span id="countNum3" class="countNum countFontSize"></span>
+                        </div>
+                    </div>
+                    <div class="countContainerRow">
+                        <div id="countCon4" class="countContainer">
+                            <p id="countSuit4" class="countFontSize"></p>
+                            <span id="countNum4" class="countNum countFontSize"></span>
+                        </div>
+                    </div>
+                    <div class="countContainerRow">
+                        <div id="countCon5" class="countContainer">
+                            <p id="countSuit5" class="countFontSize"></p>
+                            <span id="countNum5" class="countNum countFontSize"></span>
+                        </div>
+                        <div id="countCon6" class="countContainer">
+                            <p id="countSuit6" class="countFontSize"></p>
+                            <span id="countNum6" class="countNum countFontSize"></span>
+                        </div>
+                    </div>
+                    <div class="countContainerRow">
+                        <div id="countCon10" class="countContainer">
+                            <p id="countSuit10" class="countFontSize"></p>
+                            <span id="countNum10" class="countNum countFontSize"></span>
+                        </div>
+                        <div id="countCon20" class="countContainer">
+                            <p id="countSuit20" class="countFontSize"></p>
+                            <span id="countNum20" class="countNum countFontSize"></span>
+                        </div>
+                    </div>
+                </div>
+                <span class="panelButton" onclick="cggame.startGame()">New Game</span>
+                <span class="panelButton" onclick="cggame.backToTitle()">Title Screen</span>
+            </div>
+            <div class="boardContainer">
+                <div class="board">
+                    <div class="row">
+                        <div id="tile0" class="tile noMargin" onclick="cggame.placeCard(0, 0);" onmouseover="cggame.hoverOnCard(0, 0);" onmouseout="cggame.hoverOffCard(0, 0);">
+                            <img id="img0" class="tileImg" src="">
+                            <p id="suit0" class="suit"></p>
+                        </div>
+                        <div id="tile1" class="tile" onclick="cggame.placeCard(1, 0);" onmouseover="cggame.hoverOnCard(1, 0);" onmouseout="cggame.hoverOffCard(1, 0);">
+                            <img id="img1" class="tileImg" src="">
+                            <p id="suit1" class="suit"></p>
+                        </div>
+                        <div id="tile2" class="tile" onclick="cggame.placeCard(2, 0);" onmouseover="cggame.hoverOnCard(2, 0);" onmouseout="cggame.hoverOffCard(2, 0);">
+                            <img id="img2" class="tileImg" src="">
+                            <p id="suit2" class="suit"></p>
+                        </div>
+                        <div id="tile3" class="tile" onclick="cggame.placeCard(3, 0);" onmouseover="cggame.hoverOnCard(3, 0);" onmouseout="cggame.hoverOffCard(3, 0);">
+                            <img id="img3" class="tileImg" src="">
+                            <p id="suit3" class="suit"></p>
+                        </div>
+                        <div id="tile4" class="tile" onclick="cggame.placeCard(4, 0);" onmouseover="cggame.hoverOnCard(4, 0);" onmouseout="cggame.hoverOffCard(4, 0);">
+                            <img id="img4" class="tileImg" src="">
+                            <p id="suit4" class="suit"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="tile5" class="tile noMargin" onclick="cggame.placeCard(0, 1);" onmouseover="cggame.hoverOnCard(0, 1);" onmouseout="cggame.hoverOffCard(0, 1);">
+                            <img id="img5" class="tileImg" src="">
+                            <p id="suit5" class="suit"></p>
+                        </div>
+                        <div id="tile6" class="tile" onclick="cggame.placeCard(1, 1);" onmouseover="cggame.hoverOnCard(1, 1);" onmouseout="cggame.hoverOffCard(1, 1);">
+                            <img id="img6" class="tileImg" src="">
+                            <p id="suit6" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile7" class="tile" onclick="cggame.placeCard(2, 1);" onmouseover="cggame.hoverOnCard(2, 1);" onmouseout="cggame.hoverOffCard(2, 1);">
+                            <img id="img7" class="tileImg" src="">
+                            <p id="suit7" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile8" class="tile" onclick="cggame.placeCard(3, 1);" onmouseover="cggame.hoverOnCard(3, 1);" onmouseout="cggame.hoverOffCard(3, 1);">
+                            <img id="img8" class="tileImg" src="">
+                            <p id="suit8" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile9" class="tile" onclick="cggame.placeCard(4, 1);" onmouseover="cggame.hoverOnCard(4, 1);" onmouseout="cggame.hoverOffCard(4, 1);">
+                            <img id="img9" class="tileImg" src="">
+                            <p id="suit9" class="suit"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="tile10" class="tile noMargin" onclick="cggame.placeCard(0, 2);" onmouseover="cggame.hoverOnCard(0, 2);" onmouseout="cggame.hoverOffCard(0, 2);">
+                            <img id="img10" class="tileImg" src="">
+                            <p id="suit10" class="suit"></p>
+                        </div>
+                        <div id="tile11" class="tile" onclick="cggame.placeCard(1, 2);" onmouseover="cggame.hoverOnCard(1, 2);" onmouseout="cggame.hoverOffCard(1, 2);">
+                            <img id="img11" class="tileImg" src="">
+                            <p id="suit11" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile12" class="tile" onclick="cggame.placeCard(2, 2);" onmouseover="cggame.hoverOnCard(2, 2);" onmouseout="cggame.hoverOffCard(2, 2);">
+                            <img id="img12" class="tileImg" src="">
+                            <p id="suit12" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile13" class="tile" onclick="cggame.placeCard(3, 2);" onmouseover="cggame.hoverOnCard(3, 2);" onmouseout="cggame.hoverOffCard(3, 2);">
+                            <img id="img13" class="tileImg" src="">
+                            <p id="suit13" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile14" class="tile" onclick="cggame.placeCard(4, 2);" onmouseover="cggame.hoverOnCard(4, 2);" onmouseout="cggame.hoverOffCard(4, 2);">
+                            <img id="img14" class="tileImg" src="">
+                            <p id="suit14" class="suit"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="tile15" class="tile noMargin" onclick="cggame.placeCard(0, 3);" onmouseover="cggame.hoverOnCard(0, 3);" onmouseout="cggame.hoverOffCard(0, 3);">
+                            <img id="img15" class="tileImg" src="">
+                            <p id="suit15" class="suit"></p>
+                        </div>
+                        <div id="tile16" class="tile" onclick="cggame.placeCard(1, 3);" onmouseover="cggame.hoverOnCard(1, 3);" onmouseout="cggame.hoverOffCard(1, 3);">
+                            <img id="img16" class="tileImg" src="">
+                            <p id="suit16" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile17" class="tile" onclick="cggame.placeCard(2, 3);" onmouseover="cggame.hoverOnCard(2, 3);" onmouseout="cggame.hoverOffCard(2, 3);">
+                            <img id="img17" class="tileImg" src="">
+                            <p id="suit17" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile18" class="tile" onclick="cggame.placeCard(3, 3);" onmouseover="cggame.hoverOnCard(3, 3);" onmouseout="cggame.hoverOffCard(3, 3);">
+                            <img id="img18" class="tileImg" src="">
+                            <p id="suit18" class="suit"></p>
+                            <img class="centerSymbol" src="imgs/card_power.png">
+                        </div>
+                        <div id="tile19" class="tile" onclick="cggame.placeCard(4, 3);" onmouseover="cggame.hoverOnCard(4, 3);" onmouseout="cggame.hoverOffCard(4, 3);">
+                            <img id="img19" class="tileImg" src="">
+                            <p id="suit19" class="suit"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="tile20" class="tile noMargin" onclick="cggame.placeCard(0, 4);" onmouseover="cggame.hoverOnCard(0, 4);" onmouseout="cggame.hoverOffCard(0, 4);">
+                            <img id="img20" class="tileImg" src="">
+                            <p id="suit20" class="suit"></p>
+                        </div>
+                        <div id="tile21" class="tile" onclick="cggame.placeCard(1, 4);" onmouseover="cggame.hoverOnCard(1, 4);" onmouseout="cggame.hoverOffCard(1, 4);">
+                            <img id="img21" class="tileImg" src="">
+                            <p id="suit21" class="suit"></p>
+                        </div>
+                        <div id="tile22" class="tile" onclick="cggame.placeCard(2, 4);" onmouseover="cggame.hoverOnCard(2, 4);" onmouseout="cggame.hoverOffCard(2, 4);">
+                            <img id="img22" class="tileImg" src="">
+                            <p id="suit22" class="suit"></p>
+                        </div>
+                        <div id="tile23" class="tile" onclick="cggame.placeCard(3, 4);" onmouseover="cggame.hoverOnCard(3, 4);" onmouseout="cggame.hoverOffCard(3, 4);">
+                            <img id="img23" class="tileImg" src="">
+                            <p id="suit23" class="suit"></p>
+                        </div>
+                        <div id="tile24" class="tile" onclick="cggame.placeCard(4, 4);" onmouseover="cggame.hoverOnCard(4, 4);" onmouseout="cggame.hoverOffCard(4, 4);">
+                            <img id="img24" class="tileImg" src="">
+                            <p id="suit24" class="suit"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="subboard">
+                    <span id="rail0" class="subLineHrz sLHMarginEdge subInvisible"></span>
+                    <span id="rail1" class="subLineHrz subInvisible"></span>
+                    <span id="rail2" class="subLineHrz subInvisible"></span>
+                    <span id="rail3" class="subLineHrz subInvisible"></span>
+                    <span id="rail4" class="subLineHrz subInvisible"></span>
+                </div>
+                <div class="subboard" style="display: flex; flex-direction: row;">
+                    <span id="rail5" class="subLineVrt sLVMarginEdge subInvisible"></span>
+                    <span id="rail6" class="subLineVrt subInvisible"></span>
+                    <span id="rail7" class="subLineVrt subInvisible"></span>
+                    <span id="rail8" class="subLineVrt subInvisible"></span>
+                    <span id="rail9" class="subLineVrt subInvisible"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="citygrid.js"></script>
+</body>
+</html>

@@ -1,0 +1,468 @@
+@import url("https://fonts.googleapis.com/css?family=Alata");
+
+:root {
+    --tile-length: 102px;
+    --rail-length: 64px;
+    --divider-length: 15px;
+    --row-width: 570px; /* body.height - 2 * divider_length */
+    --sub-length: 500px; /* subboard.width - 2 * sub_margin_edge */
+    --sub-width: 32px;
+    --sub-width-half: 16px; /* sub_width / 2 */
+    --sub-margin-edge: 50px; /* divider_length + 1/2 * tile_length - 1/2 * sub_width */
+    --sub-margin: 85px; /* tile_length + divider_length */
+    --score-height: 124.5px; /* tile_length + 22.5 */
+
+    font-family: 'Alata';
+    --count-font-size: 1.2em;
+    --tile-font-size: 1.6em;
+    user-select: none;
+
+    /* Palette variables */
+    --mono-light: whitesmoke;
+    --mono-medium: silver;
+    --mono-dark: dimgray;
+    --mono-darkest: black;
+
+    --yellow-light: lightyellow;
+    --yellow-medium: khaki;
+
+    --status-valid: palegreen;
+    --status-invalid: salmon;
+
+    --spades: #0039a6;
+    --clubs: #00add0;
+    --hearts: #ee352e;
+    --diamonds: #ff6319;
+    --stars: #00933c;
+    --suns: #996633;
+    --moons: #b933ad;
+    --power: #fccc0a;
+}
+
+body {
+    width: 800px;
+    height: 600px;
+}
+
+p {
+    margin: 0;
+}
+
+.fullContainer {
+    width: 100%;
+    height: 100%;
+
+    position: relative;
+}
+
+.panel {
+    width: 25%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: center; */
+
+    background-color: var(--mono-medium);
+}
+
+.panelContainer {
+
+    width: 90%;
+
+    margin-top: var(--divider-length);
+    padding-top: var(--divider-length);
+    padding-bottom: var(--divider-length);
+
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    border-color: var(--mono-dark);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.countContainerRow{
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.countContainer {
+    width: 35%;
+    border-radius: 10%;
+    box-sizing: border-box;
+
+    padding: 0.2em;
+    margin-left: 10%;
+    margin-top: var(--divider-length);
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    color: var(--mono-light);
+}
+
+.countNum {
+    width: var(--count-font-size);
+    height: var(--count-font-size);
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    filter: brightness(1.1);
+}
+
+.countFontSize {
+    font-size: var(--count-font-size);
+}
+
+.panelButton {
+    background-color: var(--mono-dark);
+    color: var(--mono-light);
+
+    font-size: var(--count-font-size);
+
+    margin-top: var(--divider-length);
+
+    display: flex;
+    justify-content: center;
+
+    width: 90%;
+    border-radius: 10px;
+}
+
+.scoreContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: var(--score-height);
+}
+
+.panelValid {
+    color: var(--status-valid);
+}
+
+.panelInvalid {
+    color: var(--status-invalid);
+}
+
+.boardContainer {
+    width: 75%;
+    height: 100%;
+
+    position: relative;
+    background-color: var(--mono-light);
+}
+
+.board {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+}
+
+.gameContainer {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.menuContainer {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    filter: opacity(97.5%);
+
+    z-index: 10;
+}
+
+.popUp {
+    filter: opacity(100%);
+
+    z-index: 11;
+}
+
+.logo {
+    margin-top: var(--tile-length);
+    margin-bottom: var(--divider-length);
+}
+
+.menuRow {
+    width: 100%;
+
+    display: flex;
+    flex-direction: row;
+
+    justify-content: space-around;
+}
+
+.menuCol {
+    display: flex;
+    flex-direction: column;
+}
+
+.menuText {
+    color: var(--mono-dark);
+}
+
+.menuHeading {
+    color: var(--mono-darkest);
+
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.menuButton {
+    background-color: var(--mono-dark);
+    color: var(--mono-light);
+
+    font-size: var(--count-font-size);
+
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    height: var(--sub-width);
+    border-radius: 10px;
+
+    margin-top: var(--sub-width-half);
+}
+
+.menuIcon {
+    width: 1em;
+    height: 1em;
+}
+
+.row {
+    width: var(--row-width);
+    height: var(--tile-length);
+
+    margin-left: var(--divider-length);
+    margin-top: var(--divider-length);
+
+    display: flex;
+    flex-direction: row;
+}
+
+.tile {
+    box-sizing: border-box;
+    width: var(--tile-length);
+    height: var(--tile-length);
+
+    margin-left: var(--divider-length);
+
+    border-style: solid;
+    border-width: 5px;
+    border-radius: 10px;
+    border-color: var(--mono-dark);
+    background-color: var(--mono-light);
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+}
+
+.subboard {
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+
+    z-index: 1;
+}
+
+.subLineHrz {
+    box-sizing: border-box;
+    width: var(--sub-length);
+    height: var(--sub-width);
+
+    display: flex;
+
+    margin-left: var(--sub-margin-edge);
+    margin-top: var(--sub-margin);
+
+    background-color: var(--mono-dark);
+    border-radius: var(--sub-width-half);
+
+    filter: opacity(50%);
+}
+
+.sLHMarginEdge {
+    margin-top: var(--sub-margin-edge);
+}
+
+.subLineVrt {
+    width: var(--sub-width);
+    height: var(--sub-length);
+
+    display: flex;
+
+    margin-left: var(--sub-margin);
+    margin-top: var(--sub-margin-edge);
+
+    background-color: var(--mono-dark);
+    border-radius: var(--sub-width-half);
+
+    filter: opacity(50%);
+}
+
+.sLVMarginEdge {
+    margin-left: var(--sub-margin-edge);
+}
+
+.subInvisible {
+    filter: opacity(0%);
+}
+
+.tileImg {
+    position: absolute;
+}
+
+.suit {
+    position: absolute;
+    font-size: var(--tile-font-size);
+    color: var(--mono-light);
+}
+
+.centerSymbol {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 16px;
+    height: 16px;
+
+    z-index: 3;
+}
+
+.noMargin {
+    margin: 0;
+}
+
+.hide {
+    display: none;
+}
+
+.tileRegularActive {
+    background-color: var(--mono-light);
+}
+
+.tileRegularInactive {
+    background-color: var(--mono-medium);
+}
+
+.tileCenterActive {
+    background-color: var(--yellow-light);
+}
+
+.tileCenterInactive {
+    background-color: var(--yellow-medium);
+}
+
+.tileValid {
+    background-color: var(--status-valid);
+}
+
+.tileInvalid {
+    background-color: var(--status-invalid);
+}
+
+.spades {
+    filter: invert(11%) sepia(47%) saturate(6931%) hue-rotate(213deg) brightness(111%) contrast(109%);
+}
+
+.spadesBG {
+    background-color: var(--spades);
+}
+
+.clubs {
+    filter: invert(75%) sepia(70%) saturate(5945%) hue-rotate(154deg) brightness(94%) contrast(101%);
+}
+
+.clubsBG {
+    background-color: var(--clubs);
+}
+
+.hearts {
+    filter: invert(33%) sepia(77%) saturate(3628%) hue-rotate(344deg) brightness(95%) contrast(96%);
+}
+
+.heartsBG {
+    background-color: var(--hearts);
+}
+
+.diamonds {
+    filter: invert(49%) sepia(16%) saturate(5828%) hue-rotate(346deg) brightness(98%) contrast(107%);
+}
+
+.diamondsBG {
+    background-color: var(--diamonds);
+}
+
+.stars {
+    filter: invert(28%) sepia(89%) saturate(2313%) hue-rotate(135deg) brightness(92%) contrast(104%);
+}
+
+.starsBG {
+    background-color: var(--stars);
+}
+
+.suns {
+    filter: invert(40%) sepia(56%) saturate(496%) hue-rotate(349deg) brightness(92%) contrast(88%);
+}
+
+.sunsBG {
+    background-color: var(--suns);
+}
+
+.moons {
+    filter: invert(24%) sepia(97%) saturate(1687%) hue-rotate(283deg) brightness(95%) contrast(90%);
+}
+
+.moonsBG {
+    background-color: var(--moons);
+}
+
+.power {
+    filter: invert(81%) sepia(29%) saturate(1716%) hue-rotate(354deg) brightness(103%) contrast(98%);
+}
+
+.powerBG {
+    background-color: var(--power);
+}
+
+.rail {
+    width: var(--rail-length);
+    height: var(--rail-length);
+}
+
+.railBG {
+    background-color: var(--mono-dark);
+}
+
+
